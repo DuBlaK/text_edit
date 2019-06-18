@@ -22,13 +22,12 @@ export default class InstaService {
 
     postNote = async (url, obj) => {
         const res = await fetch(`${this._apiBase}${url}`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(obj)
-        });
-
-        return obj
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body:JSON.stringify(obj)
+        })
+        return res
     }
 }
