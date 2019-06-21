@@ -1,55 +1,33 @@
 import React, {Component} from 'react';
-import InstaService from '../services/myservice';
-
-export default class Notes extends Component {
-    InstaService = new InstaService();
-    state = {
-        notes: [],
-    }
-
+import { connect } from 'react-redux';
+import {getAllNotes} from '../services/actions';
+import Note from './Note';
+class Notes extends Component {
     componentDidMount() {
-        this.updateNotes();
-    }
-
-    updateNotes() {
-        this.InstaService.getAllNotes()
-        .then(this.onNotesLoaded)
-        .catch(this.onError)
-    }
-
-    onNotesLoaded = (notes) => {
-        this.setState({
-            notes,
-            error: false,
-        })
-    }
-
-    onError = (err) => {
-        this.setState({
-            error: true
-        })
+        this.props.getAllNotes();
     }
 
     renderItems(arr) {
-        return arr.map(note => {
-            const {text, id} = note;
+    let order = arr.sort((a, b) => b.timestamp - a.timestamp);
+        
+    return order.map((note) => {
 
-            return (
-                <div key={id} className="post">
-                    <p>{text}</p>
-                </div>
+        const {text, id} = note;
+
+        return (
+            <Note text={text} key={id} id={id}/>
             )
         })
     }
     
     render() {
-        const {error, notes} = this.state;
+        const notes = this.props.posts;
 
-        if(error) {
-            return (
-                <p>Error</p>
-            )
-        }
+        // if(error) {
+        //     return (
+        //         <p>Error</p>
+        //     )
+        // }
         const items = this.renderItems(notes);
         return (
             <div className="left">
@@ -58,3 +36,13 @@ export default class Notes extends Component {
         )
     }
 }
+
+function mapStateToProps(state) {
+    return {
+        posts: state.notes.posts
+    }
+}
+
+export default connect(mapStateToProps, {
+    getAllNotes
+})(Notes)

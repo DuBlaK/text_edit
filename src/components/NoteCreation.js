@@ -1,35 +1,28 @@
 import React, {Component} from 'react';
-import InstaService from '../services/myservice';
+import { connect } from 'react-redux';
+import {postNote, addText} from '../services/actions';
+import uniqid from 'uniqid';
 
-export default class NoteCreation extends Component {
-    InstaService = new InstaService();
+class NoteCreation extends Component {
     state = {
-        text: '',
-        error: false,
+        txt: ''
     }
 
     setText = (e) => {
-        this.setState({
-            text: e.target.value
-        })
+        this.setState({txt: e.target.value})
+        this.props.dispatch(addText(e.target.value))
     }
 
     createNote = () => {
+        // const id = uniqid();
         let note = {
-            text: this.state.text,
+            text: this.props.text,
+            timestamp: Date.now()
         }
         
-        this.InstaService.postNote('notes', note)
-        .then(this.onPosted)
-        .catch(this.onError)
-    }
-
-    onPosted = (resp) => {
-        this.setState({text: ''}, console.log(this.state))
-    }
-
-    onError = () => {
-        this.setState({error: true}, console.log(this.state))
+        this.setState({txt: ''}, () => {
+            this.props.dispatch(postNote(note));
+        })
     }
 
     render() {
@@ -37,7 +30,7 @@ export default class NoteCreation extends Component {
             <div>
                 <input 
                     type="text" 
-                    value={this.state.text}
+                    value={this.state.txt}
                     placeholder="write something..."
                     onChange={this.setText}>
                 </input>
@@ -51,3 +44,12 @@ export default class NoteCreation extends Component {
         )
     }
 }
+
+function mapStateToProps(state) {
+    return {
+        posts: state.notes.posts,
+        text: state.notes.text
+    }
+}
+
+export default connect(mapStateToProps)(NoteCreation)

@@ -1,24 +1,29 @@
 {
   "notes": [
     {
-      "text": "Here we are!",
-      "id": "1"
+      "text": "Bye",
+      "id": 1,
+      "timestamp": 1561108258846
+    },
+    {
+      "text": "nice to meet you",
+      "id": 2,
+      "timestamp": 1561108240331
+    },
+    {
+      "text": "qwe",
+      "timestamp": 1561108880516,
+      "id": 3
     },
     {
       "text": "asd",
-      "id": "UFqs9hX"
+      "timestamp": 1561108911256,
+      "id": 4
     },
     {
       "text": "zxc",
-      "id": "VUgcPfa"
-    },
-    {
-      "text": "it's me",
-      "id": "UX_NoV7"
-    },
-    {
-      "text": "qweqweqwe",
-      "id": "AyyPmB1"
+      "timestamp": 1561108951893,
+      "id": 5
     }
   ]
 }

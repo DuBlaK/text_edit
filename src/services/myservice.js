@@ -1,6 +1,4 @@
-import { async } from "q";
-
-export default class InstaService {
+export default class TextEditorService {
     constructor() {
         this._apiBase = 'http://localhost:3000/';
     }
@@ -15,19 +13,40 @@ export default class InstaService {
         return res.json()
     }
 
-    getAllNotes = async () => {
+    getData = async () => {
         const res = await this.getResource('notes');
         return res;
     }
 
-    postNote = async (url, obj) => {
-        const res = await fetch(`${this._apiBase}${url}`, {
+    postData = async (obj) => {
+        const res = await fetch(`${this._apiBase}notes`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body:JSON.stringify(obj)
         })
-        return res
+
+        return res.json()
+    }
+
+    deleteData = async (id) => {
+        const res = await fetch(`${this._apiBase}notes/${id}`, {
+            method: 'DELETE'
+        })
+
+        return res.json()
+    }
+
+    editData = async (id, obj) => {
+        const res = await fetch(`${this._apiBase}notes/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body:JSON.stringify(obj)
+        })
+        
+        return res.json()
     }
 }
