@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
-import {deleteNote, editText, addText} from '../services/actions';
+import {deleteNote, editText} from '../services/actions';
 
 class Note extends Component {
     state = {
