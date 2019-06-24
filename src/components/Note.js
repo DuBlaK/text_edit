@@ -4,7 +4,7 @@ import {deleteNote, editText} from '../services/actions';
 
 class Note extends Component {
     state = {
-        txt: '',
+        txt: this.props.text,
         editMode: false
     }
 
@@ -29,16 +29,18 @@ class Note extends Component {
 
         const {text, id} = this.props;
 
+        const textOfNote = (text === this.state.txt) ? text : this.state.txt;
+
         return (
             <div key={id} className="post">
                 {this.state.editMode ? 
                 <input 
                     type="text" 
-                    placeholder={text} 
+                    value={textOfNote} 
                     onBlur={() => this.setState({editMode: false}, () => this.editNote(id))}
                     onChange={this.setText}>
                 </input> : 
-                <p onDoubleClick={() => this.setState({editMode: true})}>{text}<span id={id} onClick={() => this.delNote(id)}> X</span></p>}
+                <p onDoubleClick={() => this.setState({editMode: true, txt:textOfNote})}>{text}<span id={id} onClick={() => this.delNote(id)}> X</span></p>}
             </div>
         )
     }
